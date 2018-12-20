@@ -32,5 +32,20 @@ public class PMarcoRossi extends  PersonajeModel {
     }
 
 
+    @Override
+    public int getHeightResourceImgCharacter() {
+        BitmapFactory.Options dimensions = new BitmapFactory.Options();
+        dimensions.inJustDecodeBounds = true;
+        Bitmap yo = BitmapFactory.decodeResource(getResources(), R.drawable.personaje1, dimensions);
+        return dimensions.outHeight;
+    }
+
+    @Override
+    public int getWidthResourceImgCharacter() {
+        BitmapFactory.Options dimensions = new BitmapFactory.Options();
+        dimensions.inJustDecodeBounds = true;
+        Bitmap yo = BitmapFactory.decodeResource(getResources(), R.drawable.personaje1, dimensions);
+        return dimensions.outWidth;
+    }
 }
 

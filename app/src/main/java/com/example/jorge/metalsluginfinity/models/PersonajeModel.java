@@ -77,10 +77,6 @@ public abstract class PersonajeModel {
         return 0F;
     }
 
-    public int getHeightResourceImgCharacter() {
-        BitmapFactory.Options dimensions = new BitmapFactory.Options();
-        dimensions.inJustDecodeBounds = true;
-        Bitmap yo = BitmapFactory.decodeResource(getResources(), R.drawable.personaje1, dimensions);
-        return dimensions.outHeight;
-    }
+    public abstract int getHeightResourceImgCharacter();
+    public abstract int getWidthResourceImgCharacter();
 }
