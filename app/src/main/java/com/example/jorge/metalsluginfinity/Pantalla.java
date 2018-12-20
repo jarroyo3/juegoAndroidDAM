@@ -36,7 +36,6 @@ public class Pantalla extends View {
     private int posicionVerticalComida = 0;
     private int puntuacion = 0;
     private int vidas = 3;
-    private int[][] cuadricula;
 
     private Handler handler;
 
@@ -72,7 +71,7 @@ public class Pantalla extends View {
             vidas = 0;
             paint.setTextAlign(Paint.Align.CENTER);
             paint.setTextSize(200);
-            canvas.drawText("GAME OVER! " , getWidth()/2, getHeight()/2, paint);
+            canvas.drawText("GAME OVER! ", getWidth() / 2, getHeight() / 2, paint);
         }
     }
 
@@ -82,7 +81,6 @@ public class Pantalla extends View {
         initComida();
         personaje.setEjeX(getWidth() / 2);
         personaje.setEjeY(getHeight() - DISTANCIA_SUELO_PERSONAJE);
-        this.cuadricula = new int[getWidth()][getHeight()];
     }
 
     private void initComida() {
@@ -93,9 +91,7 @@ public class Pantalla extends View {
             int ejeY = r.nextInt(low - heigh) + heigh;
             PersonajeModel comidaPollo = new PolloComida(getResources());
             comidaPollo.setEjeY(ejeY);
-            comidaPollo.setEjeX(r.nextInt(getWidth()-300) + 300);
-            //comidaPollo.setEjeY(0);
-            //comidaPollo.setEjeX(getWidth() / 2);
+            comidaPollo.setEjeX(r.nextInt(getWidth() - 300) + 300);
 
             listaComida.add(comidaPollo);
         }
@@ -158,12 +154,12 @@ public class Pantalla extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-         Log.e("Personaje: ", getWidth() + " ---- " + event.getX());
+        Log.e("Personaje: ", getWidth() + " ---- " + event.getX());
         boolean movimiento = false;
         if (MotionEvent.ACTION_UP == event.getAction()) {
             Matrix matrix = new Matrix();
             if (getWidth() / 2 < event.getX()) {
-                if (personaje.getEjeX() <= getWidth() - 300 ) {
+                if (personaje.getEjeX() <= getWidth() - 300) {
                     personaje.moverX(PersonajeModel.INDICADOR_MOVIMIENTO_PERSONAJE_DERECHA);
                     movimiento = true;
                     if (!isUltimoMovimientoDerecha() && personaje.getLastXPosition() != 0) {
@@ -172,7 +168,7 @@ public class Pantalla extends View {
                 }
 
             } else if (getWidth() / 2 > event.getX()) {
-                if (personaje.getEjeX()  >= 100) {
+                if (personaje.getEjeX() >= 100) {
                     personaje.moverX(PersonajeModel.INDICADOR_MOVIMIENTO_PERSONAJE_IZQUIERDA);
                     movimiento = true;
                     if (personaje.getLastXPosition() == 0 || isUltimoMovimientoDerecha()) {
