@@ -26,16 +26,17 @@ import java.util.Random;
 
 public class Pantalla extends View {
 
-    private final int INDICADOR_DESCENSO_COMIDA = 30;
-    private final int NUMERO_ELEMENTO_COMIDA = 10;
+    private final int NUMERO_ELEMENTO_COMIDA = 20;
     private final int DISTANCIA_SUELO_PERSONAJE = 300;
 
     private Bitmap fondo;
     private PersonajeModel personaje;
 
+    private int INDICADOR_DESCENSO_COMIDA = 30;
     private int posicionVerticalComida = 0;
     private int puntuacion = 0;
     private int vidas = 3;
+    private int nivel = 1;
 
     private Handler handler;
 
@@ -83,6 +84,10 @@ public class Pantalla extends View {
         personaje.setEjeY(getHeight() - DISTANCIA_SUELO_PERSONAJE);
     }
 
+    /**
+     * Inicializa los elementos comida. La comida se genera en una posición aleatoria,
+     * guardandolas en una lista para mantener su referencia.
+     */
     private void initComida() {
         Random r = new Random();
         int low = posicionVerticalComida;
@@ -98,6 +103,11 @@ public class Pantalla extends View {
     }
 
 
+    /**
+     * Metodo que pinta la comida que previamente hemos guardado en una lista
+     * para guardar su referencia
+     * @param canvas
+     */
     public void pintaComida(Canvas canvas) {
         Iterator<PersonajeModel> iter = listaComida.iterator();
         while (iter.hasNext()) {
@@ -120,7 +130,13 @@ public class Pantalla extends View {
 
     }
 
-
+    /**
+     * Comprueba si el personaje ha podido coger la comida.
+     * En caso de lo que haya cogido, se suma un punto.
+     * @param comida
+     * @param canvas
+     * @return
+     */
     private boolean existeColision(PersonajeModel comida, Canvas canvas) {
 
         Rect bounds1 = new Rect(personaje.getEjeX(), personaje.getEjeY(), personaje.getEjeX() + personaje.getBitmap().getWidth(), personaje.getEjeY() + personaje.getBitmap().getHeight());
@@ -129,11 +145,23 @@ public class Pantalla extends View {
 
         if (Rect.intersects(bounds1, bounds2)) {
             puntuacion++;
+            compruebaNivel();
             Log.e("Puntuacion", String.valueOf(puntuacion));
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * Se comprueba el nivel.
+     * Cada 5 niveles se aumenta en 10 la velocidad del juego
+     */
+    private void compruebaNivel() {
+        if (puntuacion%5 == 0) {
+            nivel++;
+            INDICADOR_DESCENSO_COMIDA+=10;
+        }
     }
 
     public void actualizaEstadoCanvas() {
@@ -154,6 +182,13 @@ public class Pantalla extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
+        /**
+         * Se comprueba si se ha tocado la parte izquierda o derecha de la pantalla para
+         * hacer avanzar al personaje en una u otra direccion.
+         * Para hacer girar al personaje, guardamos la ultima dirección.
+         * Repintamos.
+         */
         Log.e("Personaje: ", getWidth() + " ---- " + event.getX());
         boolean movimiento = false;
         if (MotionEvent.ACTION_UP == event.getAction()) {

@@ -10,8 +10,8 @@ import java.util.List;
 
 public abstract class PersonajeModel {
 
-    public static final int INDICADOR_MOVIMIENTO_PERSONAJE_DERECHA = 30;
-    public static final int INDICADOR_MOVIMIENTO_PERSONAJE_IZQUIERDA = -30;
+    public static final int INDICADOR_MOVIMIENTO_PERSONAJE_DERECHA = 50;
+    public static final int INDICADOR_MOVIMIENTO_PERSONAJE_IZQUIERDA = -50;
 
 
     protected int ejeX;
